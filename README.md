@@ -2,6 +2,8 @@
 
 A creative single-page web app themed as an **Interdimensional Radio** that tunes into different dimensions of the Rick and Morty universe.
 
+:warning: Completely bogus 100% AI made test website. 
+
 ## Features
 
 - **5 Dimensions** to tune into: Characters, Episodes, Locations, Quotes (random), and Favorites
