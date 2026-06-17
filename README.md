@@ -1,0 +1,35 @@
+# rick-and-morty-app
+
+```
+ _________________________________________
+/ "And kids... learn something from Susie \
+| and Eddie.                              |
+|                                         |
+| If you think there's a maniacal         |
+| psycho-geek in the                      |
+|                                         |
+| basement:                               |
+|                                         |
+| 1) Don't give him a chance to hit you   |
+| on the                                  |
+|                                         |
+| head with an axe!                       |
+|                                         |
+| 2) Flee the premises... even if you're  |
+| in your                                 |
+|                                         |
+| underwear.                              |
+|                                         |
+| 3) Warn the neighbors and call the      |
+| police.                                 |
+|                                         |
+| But whatever else you do... DON'T GO    |
+| DOWN IN THE DAMN BASEMENT!" -- Saturday |
+\ Night Live meets Friday the 13th        /
+ -----------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+```
