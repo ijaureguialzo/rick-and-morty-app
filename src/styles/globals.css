@@ -1,0 +1,949 @@
+/* ============================================
+   INTERDIMENSIONAL RADIO — GLOBAL STYLES
+   A Rick and Morty themed single-page app
+   ============================================ */
+
+/* --- CSS Variables --- */
+:root {
+  --green-neon: #00ff88;
+  --green-bright: #39ff14;
+  --green-dim: #00cc6a;
+  --green-dark: #00994d;
+  --space-bg: #0a0a1a;
+  --panel-bg: rgba(10, 20, 30, 0.85);
+  --card-bg: rgba(15, 30, 45, 0.9);
+  --text-primary: #e0ffe0;
+  --text-secondary: #88ccaa;
+  --border-glow: rgba(0, 255, 136, 0.3);
+  --alive: #00ff88;
+  --dead: #ff4466;
+  --unknown: #ffaa00;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Share Tech Mono', monospace;
+  background-color: var(--space-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* --- Space Background Stars --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 45% 15%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 65% 45%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.4), transparent);
+  z-index: -1;
+  animation: twinkle 8s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+/* --- CRT Scanline Overlay --- */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* --- Flicker Layer --- */
+.flicker-layer {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  animation: flicker 4s infinite;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+@keyframes flicker {
+  0%, 97%, 100% { opacity: 0; }
+  98% { opacity: 0.02; background: rgba(0, 255, 136, 0.03); }
+  99% { opacity: 0; }
+}
+
+/* --- App Layout --- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   RADIO HEADER
+   ============================================ */
+.radio-header {
+  text-align: center;
+  padding: 1.5rem 1rem 1rem;
+  position: relative;
+}
+
+/* Antenna */
+.antenna {
+  display: flex;
+  justify-content: center;
+  margin-bottom: -0.5rem;
+}
+
+.antenna-tip {
+  width: 8px;
+  height: 8px;
+  background: var(--green-neon);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green-neon), 0 0 20px var(--green-bright);
+  animation: antennaPulse 2s ease-in-out infinite;
+}
+
+.antenna-base {
+  display: block;
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(to bottom, var(--green-neon), transparent);
+  margin: 0 auto;
+}
+
+@keyframes antennaPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--green-neon), 0 0 20px var(--green-bright); }
+  50% { box-shadow: 0 0 20px var(--green-neon), 0 0 40px var(--green-bright); }
+}
+
+/* Radio body */
+.radio-body {
+  background: linear-gradient(145deg, #0d1a2a, #060e18);
+  border: 1px solid var(--border-glow);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.1),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Speaker grille */
+.speaker-grille {
+  height: 30px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 255, 136, 0.08) 3px,
+    rgba(0, 255, 136, 0.08) 4px
+  );
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Display screen */
+.radio-display {
+  background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.08), transparent);
+  border: 1px solid var(--border-glow);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.frequency-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--green-dim);
+  letter-spacing: 3px;
+}
+
+.channel-number {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--green-bright);
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.radio-title {
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  color: var(--green-neon);
+  text-shadow:
+    0 0 10px var(--green-neon),
+    0 0 20px var(--green-bright),
+    0 0 40px rgba(0, 255, 136, 0.5);
+  letter-spacing: 4px;
+  margin-bottom: 0.3rem;
+}
+
+.broadcast-subtitle {
+  font-size: clamp(0.65rem, 2vw, 0.85rem);
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+}
+
+/* Dials */
+.radio-dials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.dial-label {
+  font-size: 0.65rem;
+  color: var(--green-dim);
+  letter-spacing: 2px;
+}
+
+.tuning-dial, .volume-dial {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--green-dark), var(--green-neon), var(--green-dark));
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+  position: relative;
+}
+
+.tuning-dial::after, .volume-dial::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: var(--green-bright);
+}
+
+/* Power indicator */
+.power-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.power-light {
+  width: 10px;
+  height: 10px;
+  background: var(--green-bright);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green-bright), 0 0 20px var(--green-neon);
+  animation: powerBlink 3s ease-in-out infinite;
+}
+
+@keyframes powerBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.power-text {
+  font-size: 0.7rem;
+  color: var(--green-dim);
+  letter-spacing: 3px;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main-content {
+  flex: 1;
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ============================================
+   DIMENSION TUNER (Channel Buttons)
+   ============================================ */
+.dimension-tuner {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.channel-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  background: transparent;
+  border: 1px solid var(--border-glow);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(0.6rem, 2vw, 0.75rem);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.channel-btn:hover {
+  border-color: var(--green-neon);
+  color: var(--text-primary);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.channel-btn.active {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--green-neon);
+  color: var(--green-neon);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.channel-icon {
+  font-size: 1.1rem;
+}
+
+.channel-wave {
+  display: inline-block;
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   CONTENT AREA
+   ============================================ */
+.content-area {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   CHARACTER GRID & CARDS
+   ============================================ */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.character-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.character-card:hover {
+  border-color: var(--green-neon);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.2);
+  transform: translateY(-3px);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.character-card:hover .card-image-wrapper img {
+  transform: scale(1.05);
+}
+
+.status-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.status-badge.alive {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--alive);
+  border: 1px solid var(--alive);
+}
+
+.status-badge.dead {
+  background: rgba(255, 68, 102, 0.2);
+  color: var(--dead);
+  border: 1px solid var(--dead);
+}
+
+.status-badge.unknown {
+  background: rgba(255, 170, 0, 0.2);
+  color: var(--unknown);
+  border: 1px solid var(--unknown);
+}
+
+.card-info {
+  padding: 0.8rem;
+}
+
+.character-name {
+  font-size: 1rem;
+  color: var(--green-neon);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+  margin-bottom: 0.5rem;
+}
+
+.character-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-item {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.detail-item strong {
+  color: var(--green-dim);
+}
+
+.location-text {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   EPISODE GRID & CARDS
+   ============================================ */
+.episode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.episode-card {
+  display: flex;
+  gap: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glow);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.episode-card:hover {
+  border-color: var(--green-neon);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.episode-number {
+  font-size: 1.4rem;
+  color: var(--green-neon);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  font-weight: bold;
+  min-width: 50px;
+}
+
+.episode-name {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.episode-air-date {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.episode-characters {
+  font-size: 0.65rem;
+  color: var(--green-dim);
+  margin-top: 0.3rem;
+}
+
+/* ============================================
+   LOCATION GRID & CARDS
+   ============================================ */
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.location-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glow);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.location-card:hover {
+  border-color: var(--green-neon);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.signal-icon {
+  font-size: 2rem;
+  animation: signalPulse 3s ease-in-out infinite;
+}
+
+@keyframes signalPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.location-name {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.location-tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+}
+
+.type-tag {
+  background: rgba(0, 255, 136, 0.1);
+  color: var(--green-dim);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.dim-tag {
+  background: rgba(100, 100, 255, 0.1);
+  color: #8888ff;
+  border: 1px solid rgba(100, 100, 255, 0.3);
+}
+
+/* ============================================
+   QUOTE GENERATOR
+   ============================================ */
+.quote-generator {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.ic-logo {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-title {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--green-neon);
+  text-shadow: 0 0 10px var(--green-neon), 0 0 20px rgba(0, 255, 136, 0.4);
+  letter-spacing: 3px;
+  margin-bottom: 0.3rem;
+}
+
+.quote-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.quote-display {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-text {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: var(--green-neon);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+  font-style: italic;
+}
+
+.static-text {
+  font-size: 1rem;
+  color: var(--green-dim);
+}
+
+.static-noise {
+  display: inline-block;
+  animation: staticFlicker 0.1s steps(3) infinite;
+}
+
+@keyframes staticFlicker {
+  0% { opacity: 1; }
+  33% { opacity: 0.5; }
+  66% { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+
+.quote-placeholder {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.quote-btn {
+  padding: 0.8rem 2rem;
+  background: transparent;
+  border: 2px solid var(--green-neon);
+  border-radius: 30px;
+  color: var(--green-neon);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quote-btn:hover:not(:disabled) {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+}
+
+.quote-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   FAVORITES PANEL
+   ============================================ */
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.favorite-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 200, 50, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.favorite-card:hover {
+  border-color: rgba(255, 200, 50, 0.6);
+  box-shadow: 0 0 25px rgba(255, 200, 50, 0.15);
+}
+
+.remove-fav-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 68, 102, 0.5);
+  border-radius: 50%;
+  color: var(--dead);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.remove-fav-btn:hover {
+  background: rgba(255, 68, 102, 0.3);
+}
+
+.empty-favorites {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.empty-favorites h2 {
+  font-size: 1.2rem;
+  color: var(--green-neon);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+  margin-bottom: 0.5rem;
+}
+
+.empty-favorites p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   LOADING & ERROR STATES
+   ============================================ */
+.loading-message {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.portal-spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  border: 3px solid transparent;
+  border-top-color: var(--green-neon);
+  border-right-color: var(--green-bright);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-message p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.error-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.error-message p {
+  font-size: 0.8rem;
+  color: var(--dead);
+  margin-bottom: 1rem;
+}
+
+.retry-btn {
+  padding: 0.5rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--green-dim);
+  border-radius: 6px;
+  color: var(--green-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+  border-color: var(--green-neon);
+  color: var(--green-neon);
+}
+
+/* Load more button */
+.load-more-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.6rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border-glow);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+  border-color: var(--green-neon);
+  color: var(--green-neon);
+}
+
+/* ============================================
+   PORTAL TRANSITION ANIMATION
+   ============================================ */
+.portal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  background: var(--space-bg);
+}
+
+.portal-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+
+.portal-ring--outer {
+  width: 300px;
+  height: 300px;
+  border-top-color: var(--green-neon);
+  border-left-color: var(--green-bright);
+  animation: portalSpin 1.2s linear infinite;
+}
+
+.portal-ring--middle {
+  width: 200px;
+  height: 200px;
+  border-top-color: var(--green-bright);
+  border-right-color: var(--green-dim);
+  animation: portalSpin 0.8s linear infinite reverse;
+}
+
+.portal-ring--inner {
+  width: 120px;
+  height: 120px;
+  border-bottom-color: var(--green-neon);
+  border-left-color: var(--green-bright);
+  animation: portalSpin 0.5s linear infinite;
+}
+
+@keyframes portalSpin {
+  to { transform: rotate(360deg); }
+}
+
+.portal-core {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, var(--green-bright), var(--green-neon), transparent);
+  border-radius: 50%;
+  animation: portalGlow 1.2s ease-in-out infinite;
+}
+
+@keyframes portalGlow {
+  0%, 100% { transform: scale(0.8); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.portal-text {
+  position: absolute;
+  bottom: 30%;
+  font-size: 0.8rem;
+  color: var(--green-neon);
+  letter-spacing: 4px;
+  animation: portalTextPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes portalTextPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid var(--border-glow);
+}
+
+.footer-text {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 600px) {
+  .radio-body {
+    padding: 1rem;
+  }
+
+  .radio-dials {
+    gap: 1rem;
+  }
+
+  .tuning-dial, .volume-dial {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dimension-tuner {
+    gap: 0.3rem;
+  }
+
+  .channel-btn {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.6rem;
+  }
+
+  .channel-label {
+    display: none;
+  }
+
+  .character-grid,
+  .episode-grid,
+  .location-grid,
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-ring--outer { width: 200px; height: 200px; }
+  .portal-ring--middle { width: 140px; height: 140px; }
+  .portal-ring--inner { width: 80px; height: 80px; }
+  .portal-core { width: 50px; height: 50px; }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .character-grid,
+  .episode-grid,
+  .location-grid,
+  .favorites-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

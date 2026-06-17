@@ -106,3 +106,9 @@ MobileBackups.trash
 tmbootpicker.efi
 .idea/
 .env
+
+# Build output
+dist/
+
+# Dependencies
+node_modules/
